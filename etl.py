@@ -15,7 +15,6 @@ def process_song_file(cur: object, filepath: str) -> None:
     Returns:
         None: Reads song data and creates songs and artists dimension tables on sparkifydb.
     """
-
     # open song file
     df = pd.read_json(filepath, lines=True)
 
@@ -48,7 +47,6 @@ def process_log_file(cur: object, filepath: str) -> None:
     Returns:
         None: get customer events on sparkify and generates time dimension table.
     """
-
     # open log file
     df = pd.read_json(filepath, lines=True)
 
