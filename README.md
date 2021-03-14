@@ -32,7 +32,7 @@
 ## **About** <a name = "about"></a>
 The `songplays` datamart can give us details about the musical taste of our customers and can help us to improve our recomendation system. 
 
-This document describes the model of `songplays` table datamart on `sparkifydb` at server `localhost`, and the Python code to load new data.
+This document describes the model of `songplays` table datamart on `sparkifydb` at server `localhost`, and the Python code to load new data. The production directory and data must be simmilar to those in `data/log_data` and `data/song_data` paths in this repository.
 
 ## 🏁 **Getting Started** <a name = "getting_started"></a>
 First you need to have the right permissions to access the source files and write them into `sparkifydb` tables that generates the `songplays` datamart table. Contact the owners or your team leader for more information.
@@ -69,7 +69,6 @@ Followed the steps above you should be able to run the workloads by runnig the `
 
 ## **Deployment** <a name = "deployment"></a>
 Look for the appropriate instructions to setup the task scheduler for the workloads. These workloads will depend on the deployment operational system and the business rules. 
-.
 
 ## ⛏️ Built Using <a name = "built_using"></a>
 

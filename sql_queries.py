@@ -8,7 +8,7 @@ time_table_drop = "drop table if exists time cascade;"
 
 # CREATE TABLES
 
-songplay_table_create = ("""create table if not exists songplays (	songplay_id int primary key
+songplay_table_create = ("""create table if not exists songplays (songplay_id serial primary key
 										,start_time date references time(start_time)
     									,user_id int not null references users(user_id) 
     									,level varchar 
@@ -36,19 +36,17 @@ artist_table_create = ("""create table if not exists artists (artist_id varchar 
 									,artist_latitude float
 									,artist_longitude float);""")
 
-time_table_create = ("""create table if not exists time(timestamp bigint
-								,start_time date primary key
+time_table_create = ("""create table if not exists time(start_time date primary key
 								,hour int
 								,day int
-								,week_year smallint
+								,week smallint
 								,month smallint
 								,year int
 								,weekday smallint);""")
 
 
 # INSERT RECORDS
-songplay_table_insert = ("""INSERT INTO songplays(songplay_id
-												,start_time
+songplay_table_insert = ("""INSERT INTO songplays(start_time
 												,user_id
 												,level
 												,song_id
@@ -56,8 +54,10 @@ songplay_table_insert = ("""INSERT INTO songplays(songplay_id
 												,session_id
 												,location
 												,user_agent)
-							VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
-							ON CONFLICT (songplay_id) DO NOTHING;""")
+							VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+							ON CONFLICT(songplay_id)
+							DO UPDATE
+							SET level = excluded.level;""")
 
 user_table_insert = ("""INSERT INTO users(user_id,
                                           first_name,
@@ -66,7 +66,6 @@ user_table_insert = ("""INSERT INTO users(user_id,
                                           level)
 							VALUES(%s, %s, %s, %s, %s)
 							ON CONFLICT (user_id) DO NOTHING;""")
-							
 
 
 song_table_insert = ("""INSERT INTO songs(song_id
@@ -76,7 +75,7 @@ song_table_insert = ("""INSERT INTO songs(song_id
 										  ,duration)
 							VALUES(%s, %s, %s, %s, %s)
 							ON CONFLICT (song_id) DO NOTHING;""")
-							
+
 
 artist_table_insert = ("""INSERT INTO artists(artist_id,
 											  artist_name,
@@ -87,16 +86,14 @@ artist_table_insert = ("""INSERT INTO artists(artist_id,
 							ON CONFLICT (artist_id) DO NOTHING;""")
 
 
-
-time_table_insert = ("""INSERT INTO time(timestamp,
-										start_time,
+time_table_insert = ("""INSERT INTO time(start_time,
                                         hour,
                                         day,
-                                        week_year,
+                                        week,
                                         month,
                                         year,
                                         weekday)
-								VALUES(%s, %s, %s, %s, %s, %s, %s, %s)
+								VALUES(%s, %s, %s, %s, %s, %s, %s)
 								ON CONFLICT (start_time) DO NOTHING;""")
 
 # FIND SONGS
@@ -106,9 +103,10 @@ song_select = ("""select a.song_id
 				FROM songs a JOIN artists b ON a.artist_id = b.artist_id
 				where b.artist_name = %s 
 					 and a.title = %s
-					and duration = %s;""")
+					and a.duration = %s;""")
 
 # QUERY LISTS
-create_table_queries = [songplay_table_create, user_table_create, song_table_create, artist_table_create, time_table_create][::-1]
-drop_table_queries = [songplay_table_drop, user_table_drop, song_table_drop, artist_table_drop, time_table_drop]
-
+create_table_queries = [songplay_table_create, user_table_create,
+                        song_table_create, artist_table_create, time_table_create][::-1]
+drop_table_queries = [songplay_table_drop, user_table_drop,
+                      song_table_drop, artist_table_drop, time_table_drop]

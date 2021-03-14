@@ -67,6 +67,9 @@ def process_log_file(cur: object, filepath: str) -> None:
     time_df['year'] = time_df.start_time.dt.year
     time_df['week_day'] = time_df.start_time.dt.weekday
 
+    # drop 'ts' column
+    time_df.drop('ts', axis='columns', inplace=True)
+
     for i, row in time_df.iterrows():
         cur.execute(time_table_insert, list(row))
 
@@ -81,7 +84,7 @@ def process_log_file(cur: object, filepath: str) -> None:
     for index, row in df.iterrows():
 
         # get songid and artistid from song and artist tables
-        cur.execute(song_select, (row.song, row.artist, row.length))
+        cur.execute(song_select, (row.artist, row.song, row.length))
         results = cur.fetchone()
 
         if results:
@@ -90,8 +93,7 @@ def process_log_file(cur: object, filepath: str) -> None:
             songid, artistid = None, None
 
         # insert songplay record
-        songplay_data = (index,
-                         pd.to_datetime(row.ts, unit='ms'),
+        songplay_data = (pd.to_datetime(row.ts, unit='ms'),
                          int(row.userId),
                          row.level,
                          songid,
