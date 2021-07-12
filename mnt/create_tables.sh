@@ -17,6 +17,7 @@ songplays=$(cat "$path/songplays.sql")
 
 # Log into psql, create admin user application and database to this user.
 psql -v ON_ERROR_STOP=1 --username "$APP_DB_USER" --dbname "$APP_DB_NAME" <<-EOSQL
+  CREATE SCHEMA IF NOT EXISTS sparkify_app;
   $users
   $time
   $artists
