@@ -1,0 +1,13 @@
+conn_string: host=sparkify-postgres dbname=sparkify_app user=sparkifyusr password=sp4rk1fy
+song_data: # Process data for song data.
+  data_path: data/song_data # raw json files.
+  query_path:
+    - insert/songs.sql
+    - insert/artists.sql
+log_data:
+  data_path: data/log_data
+  query_path:
+    - insert/time.sql
+    - insert/users.sql
+    - select/song_select.sql
+    - insert/songplays.sql
