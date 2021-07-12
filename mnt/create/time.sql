@@ -11,7 +11,7 @@
 
 begin;
 create table if not exists 
-time(
+sparkify_app.time(
 	start_time date primary key
 	,hour int
 	,day int

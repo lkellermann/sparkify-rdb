@@ -10,7 +10,7 @@
  ***************************************************************************/
 
 
-insert into artists(
+insert into sparkify_app.artists(
     artist_id
     ,artist_name
     ,artist_location

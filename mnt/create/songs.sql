@@ -11,7 +11,7 @@
 
 begin;
 create table if not exists 
-songs(
+sparkify_app.songs(
     song_id varchar primary key
 	,title varchar not null
 	,artist_id varchar not null  

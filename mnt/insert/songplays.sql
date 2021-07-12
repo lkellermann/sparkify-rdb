@@ -9,7 +9,7 @@
  * Insert statement for songplays fact table.
  ***************************************************************************/
 
-INSERT INTO songplays(
+INSERT INTO sparkify_app.songplays(
     start_time
 	,user_id
 	,level

@@ -12,8 +12,8 @@
 
 select a.song_id
 	, b.artist_id
-from songs a 
-join artists b on a.artist_id = b.artist_id
+from sparkify_app.songs a 
+join sparkify_app.artists b on a.artist_id = b.artist_id
     where b.artist_name = %s 
 		and a.title = %s
 		and a.duration = %s;

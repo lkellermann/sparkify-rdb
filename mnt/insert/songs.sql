@@ -10,7 +10,7 @@
  ***************************************************************************/
 
 
-insert into songs(
+insert into sparkify_app.songs(
     song_id
     ,title
 	,artist_id

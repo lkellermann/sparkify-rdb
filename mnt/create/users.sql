@@ -11,7 +11,7 @@
 
 begin;
 create table if not exists 
-users(
+sparkify_app.users(
 	user_id smallint primary key
 	,first_name varchar not null
 	,last_name varchar not null

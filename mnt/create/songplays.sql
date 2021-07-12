@@ -11,13 +11,13 @@
 
 begin;
 create table if not exists 
-songplays(
+sparkify_app.songplays(
     songplay_id serial primary key
-    ,start_time date references time(start_time)
-    ,user_id int not null references users(user_id) 
+    ,start_time date references sparkify_app.time(start_time)
+    ,user_id int not null references sparkify_app.users(user_id) 
     ,level varchar 
-    ,song_id varchar references songs(song_id) 
-    ,artist_id varchar references artists(artist_id) 
+    ,song_id varchar references sparkify_app.songs(song_id) 
+    ,artist_id varchar references sparkify_app.artists(artist_id) 
     ,session_id int
     ,location varchar 
     ,user_agent varchar

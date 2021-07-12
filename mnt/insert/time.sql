@@ -9,7 +9,7 @@
  * Upsert statement for time dimension table.
  ***************************************************************************/
 
-insert into time(
+insert into sparkify_app.time(
     start_time
     ,hour
     ,day

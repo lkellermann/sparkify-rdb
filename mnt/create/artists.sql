@@ -11,7 +11,7 @@
 
 begin;
 create table if not exists
-artists(
+sparkify_app.artists(
 	artist_id varchar primary key
 	,artist_name text not null
 	,artist_location text
