@@ -1,0 +1,54 @@
+version: '3'
+
+services:
+
+    sparkify-postgres:
+        image: postgres:13-alpine
+        container_name: sparkify_postgres
+        restart: always
+        environment:
+            - POSTGRES_USER=sparkifypsql
+            - POSTGRES_PASSWORD=p4ssw0rd
+            - APP_DB_USER=sparkifyusr
+            - APP_DB_PASS=sp4rk1fy
+            - APP_DB_NAME=sparkify_app
+        ports:
+            - 15432:5432
+        volumes: 
+            - ./postgres:/var/lib/postgresql/data   # PGDATA.
+            - ./entrypoints/postgres:/docker-entrypoint-initdb.d/     # Entrypoint.
+            - ./mnt:/mnt
+        healthcheck:
+                test: ["CMD-SHELL", "pg_isready -U sparkifypsql"]
+                interval: 10s
+                timeout: 15s
+                retries: 10
+    
+    sparkify-pgadmin:
+       image: dpage/pgadmin4
+       container_name: sparkify_pgadmin
+       environment:
+           - PGADMIN_DEFAULT_EMAIL=admin@sparkify.com
+           - PGADMIN_DEFAULT_PASSWORD=sp4rk1fy
+           - PGHOST=sparkify-postgres
+           - PGDATABASE=sparkify_app
+           - PGUSER=sparkifypsql
+           - PGPASSWORD=p4ssw0rd
+       ports:
+           - 16543:80
+       depends_on:
+            sparkify-postgres:
+                condition: service_healthy
+
+    sparkify-python:
+        build: ./entrypoints/python
+        container_name: sparkify_python
+        working_dir: /mnt
+        volumes:
+            - ./mnt:/mnt
+        ports:
+            - 15000:81
+        depends_on:
+            sparkify-postgres:
+                condition: service_healthy
+        command: ["python", "/mnt/etl.py"] 
